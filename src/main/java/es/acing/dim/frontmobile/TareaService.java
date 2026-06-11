@@ -2,56 +2,48 @@ package es.acing.dim.frontmobile;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TareaService {
 
-    private List<Tarea> listaTareas;
+    private final TareaRepository tareaRepository;
 
-    public TareaService() {
-        this.listaTareas = new ArrayList<>();
-        listaTareas.add(new Tarea());
-        listaTareas.add(new Tarea());
-        listaTareas.add(new Tarea());
+    public TareaService(TareaRepository tareaRepository) {
+        this.tareaRepository = tareaRepository;
     }
 
     public List<Tarea> getListaTareas() {
-        return listaTareas;
-    }
-
-    public void setListaTareas(List<Tarea> listaTareas) {
-        this.listaTareas = listaTareas;
+        return tareaRepository.findAll();
     }
 
     public Tarea crearTarea(Tarea tarea) {
-        Tarea tareaCreada = tarea;
-        tareaCreada.setId(listaTareas.get(listaTareas.size()-1).getId()+1);
-        listaTareas.add(tareaCreada);
-        return tareaCreada;
+        tarea.setId(null);
+        return tareaRepository.save(tarea);
     }
 
     public Optional<Tarea> actualizarTarea(long id, Tarea tarea) {
-        for (Tarea t : listaTareas) {
-            if (t.getId() == id) {
-                t.setCompletada(tarea.isCompletada());
-                t.setTitulo(tarea.getTitulo());
-                return Optional.of(t);
-            }
+        Optional<Tarea> tareaExistente = tareaRepository.findById(id);
+
+        if (tareaExistente.isPresent()) {
+            Tarea t = tareaExistente.get();
+
+            t.setTitulo(tarea.getTitulo());
+            t.setCompletada(tarea.isCompletada());
+
+            return Optional.of(tareaRepository.save(t));
         }
+
         return Optional.empty();
     }
 
     public boolean eliminarTarea(long id) {
-        for (int i = 0;i < listaTareas.size(); i++) {
-            if (listaTareas.get(i).getId() == id) {
-                listaTareas.remove(i);
-                return true;
-            }
+        if (!tareaRepository.existsById(id)) {
+            return false;
         }
-        return false;
+        tareaRepository.deleteById(id);
+        return true;
     }
 
 
