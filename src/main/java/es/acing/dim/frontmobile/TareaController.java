@@ -9,15 +9,15 @@ import java.util.List;
 @RestController
 public class TareaController {
 
-    public TareaController() {
+    private final TareaService tareaService;
+
+    public TareaController(TareaService tareaService) {
+        this.tareaService = tareaService;
     }
 
     @GetMapping("/tareas")
     public List<Tarea> getTareas() {
-        List<Tarea> listaTareas = new ArrayList<>();
-        listaTareas.add(new Tarea());
-        listaTareas.add(new Tarea());
-        listaTareas.add(new Tarea());
+        List<Tarea> listaTareas = tareaService.getListaTareas();
         return listaTareas;
     }
 }
