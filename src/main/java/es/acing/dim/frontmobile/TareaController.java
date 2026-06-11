@@ -25,7 +25,7 @@ public class TareaController {
 
     @PostMapping("/tareas")
     public ResponseEntity<Tarea> postTarea(@RequestBody Tarea tarea) {
-        Tarea tareaCreada = (Tarea) tareaService.crearTarea(tarea);
+        Tarea tareaCreada = tareaService.crearTarea(tarea);
         return ResponseEntity.status(HttpStatus.CREATED).body(tareaCreada);
     }
 

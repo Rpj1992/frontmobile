@@ -1,18 +1,29 @@
 package es.acing.dim.frontmobile;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Tarea {
 
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String titulo;
     private boolean completada;
 
     public Tarea() {
-        id = 1;
-        titulo = "patata";
-        completada = true;
     }
 
-    public long getId() {
+    public Tarea(long id, String titulo, boolean completada) {
+        this.id = id;
+        this.titulo = titulo;
+        this.completada = completada;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -24,7 +35,7 @@ public class Tarea {
         return completada;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
