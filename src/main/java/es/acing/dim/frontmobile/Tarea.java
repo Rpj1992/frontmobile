@@ -17,7 +17,7 @@ public class Tarea {
     public Tarea() {
     }
 
-    public Tarea(long id, String titulo, boolean completada) {
+    public Tarea(Long id, String titulo, boolean completada) {
         this.id = id;
         this.titulo = titulo;
         this.completada = completada;
