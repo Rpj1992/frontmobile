@@ -15,4 +15,8 @@ export class TareaService {
   getTareas(): Observable<Tarea[]> {
     return this.http.get<Tarea[]>(this.url+'/tareas');
   }
+
+  crearTarea(tarea: Partial<Tarea>): Observable<Tarea> {
+    return this.http.post<Tarea>(this.url+'/tareas', tarea);
+  }
 }

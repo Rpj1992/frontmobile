@@ -1,9 +1,35 @@
 <main>
+
+  <form [formGroup]="formularioTarea" (ngSubmit)="crearTarea()">
+
+    <label>
+      Título:
+      <input type="text" formControlName="titulo">
+    </label>
+
+    @if (formularioTarea.get('titulo')?.touched && formularioTarea.get('titulo')?.hasError('required')) {
+      <p>El título es obligatorio.</p>
+    }
+
+    @if (formularioTarea.get('titulo')?.touched && formularioTarea.get('titulo')?.hasError('minlength')) {
+      <p>El título debe tener al menos 3 caracteres.</p>
+    }
+
+    <label>
+      <input type="checkbox" formControlName="completada">
+      Completada
+    </label>
+
+    <button type="submit">Crear tarea</button>
+
+  </form>
+
   <ul>
-    @for (tarea of tareas; track tarea) {
+    @for (tarea of tareas; track tarea.id) {
       <li>
-        {{tarea.titulo}}
+        {{ tarea.titulo }}
       </li>
     }
   </ul>
+
 </main>
