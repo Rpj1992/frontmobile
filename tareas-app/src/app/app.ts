@@ -1,5 +1,6 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {TareaService} from './services/tareaService';
+import {Tarea} from './models/tarea';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +12,17 @@ export class App implements OnInit{
 
   protected readonly title = signal('tareas-app');
 
-  tareas: any[] = [];
-  private url: string = 'http://localhost:8080';
+  tareas: Tarea[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private tareaService: TareaService) {
   }
 
   ngOnInit() {
-    this.http.get<any>(this.url+'/tareas').subscribe(
+    this.tareaService.getTareas().subscribe(
       data => {
+        //console.log(data);
         this.tareas = data;
+        //console.log(this.tareas);
       }
     );
   }
